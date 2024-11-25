@@ -5,7 +5,7 @@
         <div class="max-w-sm mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-200">
             <h2 class="text-4xl font-extrabold text-center text-gray-900 py-6">Login</h2>
             <div class="mb-6">
-                <a href="{{ route('google.signin') }}" 
+                <a href="/auth/google/redirect" 
                    class="flex items-center justify-center w-full py-3 border border-gray-300 rounded-md hover:bg-gray-100 transition duration-300">
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="logo" class="w-6 h-6 mr-3">
                     <span class="text-sm font-semibold text-gray-700">Sign in with Google</span>

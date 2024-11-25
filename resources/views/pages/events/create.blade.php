@@ -72,19 +72,5 @@
                 </button>
             </form>                     
         </div>
-        <div class="mt-12 max-w-4xl mx-auto">
-            <h2 class="text-3xl font-semibold text-gray-900 mb-6">Your Events</h2>
-            @foreach ($events as $event)
-                <x-card :title="$event->title" :description="$event->description">
-                    <div class="flex-col gap-1 justify-start">
-                    <span class="block">{{ \Carbon\Carbon::parse($event->date)->format('F j, Y') }}</span>
-                    <br/>
-                    <a href="{{ route('events.show', $event->id) }}" class="bg-blue-500 text-white px-6 py-2 rounded-md shadow hover:bg-blue-600 transition">
-                        View Event
-                    </a>
-                    </div>
-                </x-card>
-            @endforeach
-        </div>
     </div>
 @endsection

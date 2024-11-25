@@ -18,7 +18,7 @@
                     </a>
                 </div>
             @endif
-            <div class="flex justify-start gap-3">
+            <div class="flex justify-center gap-3 flex-wrap items-center">
             @foreach ($events as $event)
                 <x-card :title="$event->title" :description="$event->description">
                     <div class="flex-col gap-1 justify-start">

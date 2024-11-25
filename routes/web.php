@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProviderController;
 use App\Http\Middleware\IsAdmin;
 
 Route::get('/', function () {
@@ -17,10 +18,11 @@ Route::get('/forgotpassword', function () {
 })->name('forgotpassword');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
-Route::get('/signin', function () {
-    return response('<h1>Signin with Google</h1>');
-})->name('google.signin');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::get('/auth/{provider}/redirect', [ProviderController::class, 'redirect']);
+Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback']);
 
 
 // event controller
@@ -32,7 +34,7 @@ Route::middleware(IsAdmin::class)->group(function () {
     Route::post('/event/create', [EventController::class, 'store'])->name('event.post');
     Route::delete('/event/{event}/delete', [EventController::class, 'destroy'])->name('event.destroy');
 });
-Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+Route::get('/event/{event}', [EventController::class, 'show'])->name('events.show');
 
 // admin test route
 Route::get('/admin', function () {
