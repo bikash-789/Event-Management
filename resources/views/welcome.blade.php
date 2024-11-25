@@ -37,7 +37,11 @@
         <div class="container mx-auto text-center">
             <h2 class="text-2xl font-semibold mb-4">Ready to Get Started?</h2>
             <p class="text-gray-600 mb-6">Sign up today and take control of your events and bookings!</p>
-            <a href="/register" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">Get Started</a>
+            @auth
+                <a href="/events" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">Get Started</a>
+            @else
+                <a href="/register" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">Get Started</a>
+            @endauth
         </div>
     </section>
 </div>

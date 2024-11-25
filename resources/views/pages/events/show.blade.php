@@ -24,11 +24,11 @@
         </div>
         <div class="mt-8 flex justify-end space-x-4">
             @if ($isAdmin)
-                <a href="{{ route('events.edit', ['id' => $eventId]) }}" 
+                <a href="{{ route('pages.event.edit', $id) }}" 
                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md shadow transition">
                     Edit Event
                 </a>
-                <form action="{{ route('events.destroy', ['id' => $eventId]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                <form action="{{ route('event.destroy', $id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" 
@@ -37,7 +37,7 @@
                     </button>
                 </form>
             @endif
-            <a href="{{ route('events.index') }}" 
+            <a href="{{ route('pages.events.index') }}" 
                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md shadow transition">
                 Back to Events
             </a>

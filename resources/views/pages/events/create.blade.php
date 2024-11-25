@@ -45,6 +45,17 @@
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
+
+                <div class="mb-4">
+                    <label for="capacity" class="block text-sm font-semibold text-gray-700">Event Capacity</label>
+                    <input type="number" id="capacity" name="capacity" required 
+                           class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                           placeholder="Enter the event capacity">
+                    @error('capacity')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <div class="mb-6">
                     <label for="description" class="block text-sm font-semibold text-gray-700">Event Description</label>
                     <textarea id="description" name="description" rows="5" required 

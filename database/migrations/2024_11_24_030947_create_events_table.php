@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('location');
             $table->date('date');
             $table->time('time');
+            $table->integer('capacity');
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });

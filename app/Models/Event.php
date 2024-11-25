@@ -19,6 +19,7 @@ class Event extends Model
         'location',
         'date',
         'time',
+        'capacity',
         'created_by',
     ];
 

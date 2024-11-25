@@ -10,8 +10,11 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::all();
-        return view('pages.events.index', compact('events'));
+        $events = Event::orderBy('date')
+                    ->orderBy('time')
+                    ->get(); 
+        $isAdmin = Auth::check() && Auth::user()->role == 'admin';
+        return view('pages.events.index', ['events'=>$events, 'isAdmin'=>$isAdmin]);
     }
     public function create()
     {
@@ -25,6 +28,7 @@ class EventController extends Controller
             'description' => 'required|string',
             'location' => 'required|string|max:255',
             'date' => 'required|date|after:today',
+            'capacity' => 'required|integer|min:1|max:4000',
             'time' => 'required|date_format:H:i',
         ]);
         $event = new Event($validatedData);
@@ -34,14 +38,15 @@ class EventController extends Controller
     }
     public function show(Event $event)
     {
-        $isAdmin = Auth::check() && Auth::user()->role == 'user';
+        $isAdmin = Auth::check() && Auth::user()->role == 'admin';
         return view('pages.events.show', [
             'title' => $event->title,
             'location' => $event->location,
             'description' => $event->description,
+            'capacity'=>$event->capacity,
             'date' => \Carbon\Carbon::parse($event->date)->format('F j, Y'),
             'isAdmin' => $isAdmin,
-            'eventId' => $event->id,
+            'id' => $event->id,
         ]);
     }
 
@@ -55,18 +60,19 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
+            'capacity' => 'required|integer|min:1|max:4000',
             'date' => 'required|date|after:today',
             'time' => 'required|date_format:H:i',
         ]);
 
         $event->update($validatedData);
 
-        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
+        return redirect()->route('pages.events.index')->with('success', 'Event updated successfully.');
     }
     public function destroy($id)
     {
         $event = Event::findOrFail($id);
         $event->delete();
-        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+        return redirect()->route('pages.events.index')->with('success', 'Event deleted successfully.');
     }
 }
