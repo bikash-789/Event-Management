@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Event;
+
 class Attendee extends Model
 {
     use HasFactory;
@@ -11,7 +14,7 @@ class Attendee extends Model
     protected $fillable = [
         'event_id',
         'user_id',
-        'is_verified', 
+        'is_confirmed', 
     ];
     public function user()
     {

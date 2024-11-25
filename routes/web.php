@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Middleware\IsAdmin;
 
@@ -20,7 +21,7 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
+// google auth controller
 Route::get('/auth/{provider}/redirect', [ProviderController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback']);
 
@@ -36,6 +37,13 @@ Route::middleware(IsAdmin::class)->group(function () {
 });
 Route::get('/event/{event}', [EventController::class, 'show'])->name('events.show');
 
+// bookings controller
+Route::post('/booking/create/{id}', [BookingController::class, 'store'])->name('booking.post');
+Route::middleware(IsAdmin::class)->group(function(){
+    Route::get('/bookings', [BookingController::class, 'index'])->name('pages.bookings.index');
+    Route::patch('/bookings/{id}', [BookingController::class, 'update'])->name('booking.update');
+});
+Route::get('/booking/verify/{bookingId}', [BookingController::class, 'verify'])->name('booking.verify');
 // admin test route
 Route::get('/admin', function () {
     return 'Welcome Admin!';

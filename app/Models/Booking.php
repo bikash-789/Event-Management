@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Attendee;
 
 class Booking extends Model
 {
@@ -30,8 +31,12 @@ class Booking extends Model
         $statuses = [
             'pending' => 'Pending',
             'confirmed' => 'Confirmed',
-            'canceled' => 'Canceled',
+            'cancelled' => 'Cancelled',
         ];
         return $statuses[$value] ?? 'Unknown';
+    }
+    public function attendee()
+    {
+        return $this->hasOne(Attendee::class, 'event_id', 'event_id')->where('user_id', $this->user_id);
     }
 }

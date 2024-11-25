@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Attendee;
 use App\Models\User;
+use App\Models\Event;
 
 class Event extends Model
 {
@@ -51,5 +52,10 @@ class Event extends Model
     public function scopePast($query)
     {
         return $query->where('date', '<', now());
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'event_id');
     }
 }

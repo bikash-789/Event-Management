@@ -40,6 +40,15 @@
                     </button>
                 </form>
             @endif
+            @if(!$isAdmin)
+            <form action="{{ route('booking.post', $id) }}" method="POST" onsubmit="return confirm('Are you sure you want to book this event?');">
+                @csrf
+                <button type="submit" 
+                class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md shadow-md transition-transform transform hover:scale-105">
+                    Book now
+                </button>
+            </form>
+            @endif
             <a href="{{ route('pages.events.index') }}" 
                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md shadow-md transition-transform transform hover:scale-105">
                 Back to Events
