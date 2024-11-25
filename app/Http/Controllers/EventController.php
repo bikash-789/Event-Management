@@ -45,6 +45,7 @@ class EventController extends Controller
             'description' => $event->description,
             'capacity'=>$event->capacity,
             'date' => \Carbon\Carbon::parse($event->date)->format('F j, Y'),
+            'time' => $event->time ? \Carbon\Carbon::parse($event->time)->format('h:i A') : 'Time not set',
             'isAdmin' => $isAdmin,
             'id' => $event->id,
         ]);
