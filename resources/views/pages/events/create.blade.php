@@ -9,7 +9,7 @@
         </div>
         <div class="mt-12 max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-200">
             <h2 class="text-3xl font-semibold text-gray-900 mb-6">Create New Event</h2>
-            <form action="{{ route('event.post') }}" method="POST" class="space-y-6">
+            <form action="{{ route('v1.event.post') }}" method="POST" class="space-y-6">
                 @csrf
                 <div class="mb-4">
                     <label for="title" class="block text-sm font-semibold text-gray-700">Event Name</label>

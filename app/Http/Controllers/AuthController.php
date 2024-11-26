@@ -12,9 +12,20 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('/');
+        $user = User::where('email', $credentials['email'])->first();
+        if ($user) 
+        {
+            if ($user->status === 'blacklisted') {
+                return back()->withErrors(['email' => 'Your account has been blacklisted.']);
+            }
+            if (Auth::attempt($credentials)) {
+                return redirect()->intended('/v1');
+            }
         }
         return back()->withErrors(['email' => 'Invalid credentials.']);
     }
@@ -37,11 +48,11 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect('/');
+        return redirect('/v1');
     }
 
     public function logout() {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/v1/login');
     }
 }

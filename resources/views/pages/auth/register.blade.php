@@ -4,7 +4,7 @@
     <div class="mx-auto px-4 py-16 w-[29rem] h-[100vh]">
         <div class="max-w-sm mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-200">
             <h2 class="text-4xl font-extrabold text-center text-gray-900 py-6">Create an Account</h2>
-            <form action="{{ route('register.post') }}" method="POST" class="p-4">
+            <form action="{{ route('v1.register.post') }}" method="POST" class="p-4">
                 @csrf
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-semibold text-gray-700">Full Name</label>
@@ -46,7 +46,7 @@
             </form>
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600">Already have an account? 
-                    <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-800 transition duration-200">Login here</a>
+                    <a href="{{ route('v1.login') }}" class="text-blue-600 hover:text-blue-800 transition duration-200">Login here</a>
                 </p>
             </div>
         </div>

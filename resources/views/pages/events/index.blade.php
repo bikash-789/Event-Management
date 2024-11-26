@@ -13,7 +13,7 @@
         <div class="mt-10">
             @if ($isAdmin)
                 <div class="flex justify-center my-4">
-                    <a href="{{ route('pages.event.create')}}" class="bg-blue-500 text-white px-6 py-2 rounded-md shadow hover:bg-blue-600 transition">
+                    <a href="{{ route('v1.pages.event.create')}}" class="bg-blue-500 text-white px-6 py-2 rounded-md shadow hover:bg-blue-600 transition">
                         Add Event
                     </a>
                 </div>
@@ -24,7 +24,7 @@
                     <div class="flex-col gap-1 justify-start">
                     <span class="block">{{ \Carbon\Carbon::parse($event->date)->format('F j, Y') }}</span>
                     <br/>
-                    <a href="{{ route('events.show', $event->id) }}" class="bg-blue-500 text-white px-6 py-2 rounded-md shadow hover:bg-blue-600 transition">
+                    <a href="{{ route('v1.events.show', $event->id) }}" class="bg-blue-500 text-white px-6 py-2 rounded-md shadow hover:bg-blue-600 transition">
                         View Event
                     </a>
                     </div>

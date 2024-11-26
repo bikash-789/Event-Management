@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->date('booking_date')->nullable();
             $table->string('status')->default('pending');
+            $table->string('verification_token')->nullable();
+            $table->string('verification_token_expires_at')->nullable();
             $table->timestamps();
         });
     }

@@ -27,11 +27,11 @@
         </div>
         <div class="mt-8 flex justify-end space-x-4">
             @if ($isAdmin)
-                <a href="{{ route('pages.event.edit', $id) }}" 
+                <a href="{{ route('v1.pages.event.edit', $id) }}" 
                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md shadow-md transition-transform transform hover:scale-105">
                     Edit Event
                 </a>
-                <form action="{{ route('event.destroy', $id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                <form action="{{ route('v1.event.destroy', $id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" 
@@ -41,7 +41,7 @@
                 </form>
             @endif
             @if(!$isAdmin)
-            <form action="{{ route('booking.post', $id) }}" method="POST" onsubmit="return confirm('Are you sure you want to book this event?');">
+            <form action="{{ route('v1.booking.post', $id) }}" method="POST" onsubmit="return confirm('Are you sure you want to book this event?');">
                 @csrf
                 <button type="submit" 
                 class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md shadow-md transition-transform transform hover:scale-105">
@@ -49,7 +49,7 @@
                 </button>
             </form>
             @endif
-            <a href="{{ route('pages.events.index') }}" 
+            <a href="{{ route('v1.pages.events.index') }}" 
                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md shadow-md transition-transform transform hover:scale-105">
                 Back to Events
             </a>

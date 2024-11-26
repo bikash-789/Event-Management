@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Models\Attendee;
 use App\Mail\BookingVerificationMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
@@ -21,6 +22,11 @@ class BookingController extends Controller
             'attendees' => $allAttendees,
         ]);
     }
+    public function userbookings()
+    {
+        $bookings = Booking::where('user_id', auth()->id())->with('event')->get();
+        return view('pages.bookings.userbookings', compact('bookings'));
+    }
     public function create($id)
     {
 
@@ -30,21 +36,27 @@ class BookingController extends Controller
         $userId = Auth::id();
         $event = Event::findOrFail($eventId);
         if (Booking::where('event_id', $eventId)->where('user_id', $userId)->exists()) {
-            return redirect()->route('pages.events.index', $eventId)->with('error', 'You have already booked this event.');
+            return redirect()->route('v1.pages.events.index', $eventId)->with('error', 'You have already booked this event.');
         }
         $bookingCount = Booking::where('event_id', $eventId)->count();
         if ($bookingCount >= $event->capacity) {
-            return redirect()->route('pages.events.index', $eventId)->with('error', 'This event is fully booked.');
+            return redirect()->route('v1.pages.events.index', $eventId)->with('error', 'This event is fully booked.');
         }
-        Booking::create([
-            'event_id' => $eventId,
-            'user_id' => $userId,
-            'status' => 'pending',
-        ]);
+        $booking = new Booking();
+        $booking->event_id = $eventId;
+        $booking->user_id = $userId;
+        $booking->status = 'pending';
+        $booking->booking_date = now();
+        $booking->verification_token = Str::random(32);
+        $booking->verification_token_expires_at = now()->addHours(24);
+        $booking->save();
+
         $event = Event::find($eventId);
         $user = auth()->user();
-        Mail::to($user->email)->send(new BookingVerificationMail($user, $event));
-        return redirect()->route('pages.events.index')->with('success', 'Booking created and verification email sent!');
+        $verificationUrl = route('v1.bookings.verify', ['id' => $booking->id, 'token' => $booking->verification_token]);
+        Mail::send('emails.booking-verification', ['user'=>$user, 'verificationUrl'=>$verificationUrl, 'event'=>$event, 'token'=>$booking->verification_token], function ($message) use ($user) {
+        $message->to($user->email)->subject('Verify Your Booking');
+        });
     }
 
     public function show(Event $event)
@@ -81,18 +93,22 @@ class BookingController extends Controller
             }
         }
         $booking->save();
-        return redirect()->route('pages.bookings.index')->with('success', 'Booking status updated successfully!');
+        return redirect()->route('v1.pages.bookings.index')->with('success', 'Booking status updated successfully!');
     }
 
-    public function verify($bookingId)
+    public function verify($id, $token)
     {
-        $booking = Booking::findOrFail($bookingId);
-        if ($booking->status === 'confirmed') {
-            return redirect()->route('pages.events.index')->with('info', 'Booking already verified!');
+        $booking = Booking::findOrFail($id);
+        if ($booking->verification_token_expires_at < now()) {
+            return redirect()->route('pages.bookings.index')->with('error', 'Verification link has expired.');
         }
-        $booking->status = 'confirmed';
-        $booking->save();
-        return redirect()->route('pages.events.index')->with('success', 'Booking verified successfully!');
+        if ($booking->verification_token === $token) {
+            $booking->status = 'confirmed';
+            $booking->verification_token = null;
+            $booking->save();
+            return redirect()->route('pages.bookings.index')->with('success', 'Booking verified successfully!');
+        }
+        return redirect()->route('pages.bookings.index')->with('error', 'Invalid verification link.');
     }
 
     public function destroy($id)

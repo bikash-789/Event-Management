@@ -17,6 +17,8 @@ class Booking extends Model
         'event_id',
         'booking_date',
         'status',
+        'verification_token',
+        'verification_token_expires_at'
     ];
     public function user()
     {
