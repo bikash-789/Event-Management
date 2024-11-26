@@ -37,7 +37,7 @@
                     @enderror
                 </div>
                 <div class="flex justify-between items-center mb-6">
-                    <a href="{{ route('v1.forgotpassword') }}" class="text-sm text-blue-600 hover:text-blue-800 transition duration-200">Forgot your password?</a>
+                    <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:text-blue-800 transition duration-200">Forgot your password?</a>
                 </div>
                 <button type="submit" 
                         class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">

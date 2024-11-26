@@ -8,6 +8,7 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsUser;
+use Illuminate\Support\Facades\Password;
 
 // v1 routes
 Route::prefix('v1')->group(function () {
@@ -18,13 +19,14 @@ Route::prefix('v1')->group(function () {
     // auth controller
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('v1.login');
     Route::post('/login', [AuthController::class, 'login'])->name('v1.login.post');
-    Route::get('/forgotpassword', function () {
-        return view('pages.forgotpassword');
-    })->name('v1.forgotpassword');
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('v1.register');
     Route::post('/register', [AuthController::class, 'register'])->name('v1.register.post');
     Route::post('/logout', [AuthController::class, 'logout'])->name('v1.logout');
-
+    
     // google auth controller
     Route::get('/auth/{provider}/redirect', [ProviderController::class, 'redirect']);
     Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback']);
