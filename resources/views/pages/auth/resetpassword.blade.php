@@ -4,23 +4,6 @@
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
             <h2 class="text-center text-3xl font-semibold text-gray-700 mb-6">Reset Your Password</h2>
-
-            @if(session('status'))
-                <div class="alert alert-success bg-green-100 text-green-700 p-3 rounded-md mb-4">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            @if ($errors->any())
-                <div class="alert alert-danger bg-red-100 text-red-700 p-3 rounded-md mb-4">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <form action="{{ route('password.update') }}" method="POST">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
