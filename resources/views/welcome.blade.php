@@ -6,8 +6,8 @@
         <div class="container mx-auto text-center">
             <h1 class="text-4xl font-bold mb-4">Welcome to Event Management App</h1>
             <p class="text-lg mb-6">Your one-stop platform for managing events and bookings with ease.</p>
-            <a href="/events" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">View Events</a>
-            <a href="/bookings" class="ml-4 px-6 py-3 border border-white rounded-lg hover:bg-gray-100 hover:text-blue-700">View Bookings</a>
+            <a href="/v1/events" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">View Events</a>
+            <a href="/v1/bookings" class="ml-4 px-6 py-3 border border-white rounded-lg hover:bg-gray-100 hover:text-blue-700">View Bookings</a>
         </div>
     </section>
     <section class="py-16">
@@ -38,9 +38,9 @@
             <h2 class="text-2xl font-semibold mb-4">Ready to Get Started?</h2>
             <p class="text-gray-600 mb-6">Sign up today and take control of your events and bookings!</p>
             @auth
-                <a href="/events" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">Get Started</a>
+                <a href="/v1/events" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">Get Started</a>
             @else
-                <a href="/register" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">Get Started</a>
+                <a href="/v1/register" class="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 text-white font-semibold">Get Started</a>
             @endauth
         </div>
     </section>
