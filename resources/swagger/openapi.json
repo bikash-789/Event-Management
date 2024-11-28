@@ -1,0 +1,192 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Event Management API",
+      "version": "1.0.0",
+      "description": "API documentation for the Event Management application."
+    },
+    "paths": {
+      "/v1/": {
+        "get": {
+          "summary": "Homepage",
+          "responses": {
+            "200": {
+              "description": "Welcome page"
+            }
+          }
+        }
+      },
+      "/v1/login": {
+        "get": {
+          "summary": "Show login form",
+          "responses": {
+            "200": {
+              "description": "Login form rendered"
+            }
+          }
+        },
+        "post": {
+          "summary": "Login a user",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string", "format": "email" },
+                    "password": { "type": "string", "format": "password" }
+                  },
+                  "required": ["email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "User logged in successfully"
+            },
+            "401": {
+              "description": "Invalid credentials"
+            }
+          }
+        }
+      },
+      "/v1/register": {
+        "get": {
+          "summary": "Show registration form",
+          "responses": {
+            "200": {
+              "description": "Registration form rendered"
+            }
+          }
+        },
+        "post": {
+          "summary": "Register a new user",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "email": { "type": "string", "format": "email" },
+                    "password": { "type": "string", "format": "password" }
+                  },
+                  "required": ["name", "email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User registered successfully"
+            },
+            "400": {
+              "description": "Validation error"
+            }
+          }
+        }
+      },
+      "/v1/events": {
+        "get": {
+          "summary": "List all events",
+          "responses": {
+            "200": {
+              "description": "List of events"
+            }
+          }
+        }
+      },
+      "/v1/event/{event}": {
+        "get": {
+          "summary": "Show event details",
+          "parameters": [
+            {
+              "name": "event",
+              "in": "path",
+              "required": true,
+              "schema": { "type": "integer" },
+              "description": "Event ID"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Event details"
+            },
+            "404": {
+              "description": "Event not found"
+            }
+          }
+        }
+      },
+      "/v1/booking/create/{id}": {
+        "post": {
+          "summary": "Create a booking",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": { "type": "integer" },
+              "description": "Event ID"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Booking created successfully"
+            },
+            "400": {
+              "description": "Validation error"
+            }
+          }
+        }
+      },
+      "/v1/bookings/user": {
+        "get": {
+          "summary": "List user bookings",
+          "responses": {
+            "200": {
+              "description": "List of user bookings"
+            }
+          }
+        }
+      },
+      "/swagger/v1": {
+        "get": {
+          "summary": "Swagger UI",
+          "responses": {
+            "200": {
+              "description": "Swagger UI rendered"
+            },
+            "403": {
+              "description": "Unauthorized access"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "LoginRequest": {
+          "type": "object",
+          "properties": {
+            "email": { "type": "string", "format": "email" },
+            "password": { "type": "string", "format": "password" }
+          },
+          "required": ["email", "password"]
+        },
+        "RegisterRequest": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "email": { "type": "string", "format": "email" },
+            "password": { "type": "string", "format": "password" }
+          },
+          "required": ["name", "email", "password"]
+        }
+      }
+    }
+  }
+  

@@ -63,3 +63,11 @@ Route::prefix('v1')->group(function () {
         return 'Welcome Admin!';
     })->middleware(IsAdmin::class);
 });
+
+// swagger
+Route::get('/swagger/v1', function () {
+    if (Gate::allows('viewSwaggerUI')) {
+        return view('pages.vendor.l5-swagger.index');
+    }
+    abort(403);
+});
