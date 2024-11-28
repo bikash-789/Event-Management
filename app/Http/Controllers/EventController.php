@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
+use App\Jobs\SendAnalytics;
 
 class EventController extends Controller
 {
@@ -34,7 +35,23 @@ class EventController extends Controller
         $event = new Event($validatedData);
         $event->created_by = Auth::id();
         $event->save();
-        return redirect()->route('pages.events.index')->with('success', 'Event created successfully.');
+        $eventData = [
+            'type' => 'event_created',
+            'data' => [
+                'event_id' => $event->id,
+                'title' => $event->title,
+                'description' => $event->description,
+                'location' => $event->location,
+                'date' => $event->date,
+                'time' => $event->time,
+                'capacity' => $event->capacity,
+                'created_by' => $event->created_by,
+                'created_at' => $event->created_at->toDateTimeString(),
+            ],
+        ];
+        // $data = json_encode($eventData);
+        SendAnalytics::dispatch($eventData);
+        return redirect()->route('v1.pages.events.index')->with('success', 'Event created successfully.');
     }
     public function show(Event $event)
     {
@@ -68,12 +85,12 @@ class EventController extends Controller
 
         $event->update($validatedData);
 
-        return redirect()->route('pages.events.index')->with('success', 'Event updated successfully.');
+        return redirect()->route('v1.pages.events.index')->with('success', 'Event updated successfully.');
     }
     public function destroy($id)
     {
         $event = Event::findOrFail($id);
         $event->delete();
-        return redirect()->route('pages.events.index')->with('success', 'Event deleted successfully.');
+        return redirect()->route('v1.pages.events.index')->with('success', 'Event deleted successfully.');
     }
 }

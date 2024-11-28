@@ -12,6 +12,21 @@
     </head>
     <body>
         @include('partials.navigation')
+        @if(session('success'))
+                <div class="alert alert-success bg-green-100 text-green-700 p-3 rounded-md mb-4 text-center">
+                    {{ session('success') }}
+                </div>
+        @endif
+
+        @if ($errors->any())
+                <div class="alert alert-danger bg-red-100 text-red-700 p-3 rounded-md mb-4 text-center">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+        @endif
         <main>
             @yield('content')
         </main>

@@ -25,7 +25,7 @@ class UserController extends Controller
         $user->status = 'blacklisted';
         $user->save();
 
-        return redirect()->route('users')->with('success', 'User has been blacklisted.');
+        return redirect()->route('v1.users')->with('success', 'User has been blacklisted.');
     }
     public function whitelist($id)
     {
@@ -33,7 +33,7 @@ class UserController extends Controller
         $user->status = 'whitelisted';
         $user->save();
 
-        return redirect()->route('users')->with('success', 'User has been whitelisted.');
+        return redirect()->route('v1.users')->with('success', 'User has been whitelisted.');
     }
     public function reactivate($id)
     {
@@ -41,13 +41,13 @@ class UserController extends Controller
         $user->status = 'active';
         $user->save();
 
-        return redirect()->route('users')->with('success', 'User has been reactivated.');
+        return redirect()->route('v1.users')->with('success', 'User has been reactivated.');
     }
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('users')->with('success', 'User deleted successfully.');
+        return redirect()->route('v1.users')->with('success', 'User deleted successfully.');
     }
 }
