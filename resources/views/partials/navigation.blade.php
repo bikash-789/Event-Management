@@ -1,6 +1,6 @@
 <section class="bg-gray-900 text-white">
     <nav class="container mx-auto flex justify-between items-center py-4 px-6">
-        <div class="text-lg font-bold">EM</div>
+        <a class="text-xl font-bold" href="/v1">EM</a>
         <div class="md:hidden">
             <button class="text-gray-300 hover:text-white">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
