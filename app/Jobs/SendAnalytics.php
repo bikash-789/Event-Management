@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Queue;
 
 
 class SendAnalytics implements ShouldQueue
@@ -19,10 +20,12 @@ class SendAnalytics implements ShouldQueue
     }
     public function handle(): void
     {
-        \Amqp::publish(
-            '',
+        $queueName = env('RABBITMQ_QUEUE', 'analytics_queue');
+
+        // Push raw data directly to the queue
+        Queue::pushRaw(
             json_encode($this->eventData),
-            ['queue' => env('RABBITMQ_QUEUE', 'analytics_queue')]
+            $queueName
         );
     }
 }
